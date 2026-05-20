@@ -60,12 +60,12 @@ jobs:
             docker pull ghcr.io/${{ github.repository }}:latest
 
             echo "Stopping old container..."
-            docker stop laravel-app || true
-            docker rm laravel-app || true
+            docker stop ticketevents_container || true
+            docker rm ticketevents_container || true
 
             echo "Running new container..."
             docker run -d \
-              --name laravel-app \
+              --name ticketevents_container \
               -p 8080:80 \
               --restart always \
               ghcr.io/${{ github.repository }}:latest
