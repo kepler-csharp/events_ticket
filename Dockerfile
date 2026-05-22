@@ -72,13 +72,37 @@ RUN apk add --no-cache \
     supervisor
 
 # Copiar desde la etapa build
-COPY --from=build /app .
+COPY --from=build /app /app
 
 # Copiar configuración de Nginx
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 
 # Copiar configuración de Supervisor
 COPY docker/supervisord.conf /etc/supervisord.conf
+
+# Crear .env automaticamente
+RUN cp .env.example .env
+
+# Generar APP_KEY automáticamente
+RUN php artisan key:generate
+
+# Forzar aplicación sin DB
+RUN sed -i 's/SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env || true && \
+    sed -i 's/CACHE_STORE=.*/CACHE_STORE=file/' .env || true && \
+    sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=null/' .env || true
+
+# Dar permisos a laravel
+RUN mkdir -p storage/logs bootstrap/cache /run/nginx && \
+    chown -R www-data:www-data /app && \
+    chmod -R 775 storage bootstrap/cache
+
+# Limpiar caché de Laravel
+RUN php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan route:clear
+
+# Validar PHP-FPM config
+RUN php-fpm -t
 
 # Crear directorios necesarios
 RUN mkdir -p /run/nginx
