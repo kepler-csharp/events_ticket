@@ -4,15 +4,28 @@
 @section("content")
     <h1>REGISTRATE</h1>
 
-    <form action="{{ route('auth.register') }}">
+    @error("failedReq")
+        <p>{{ $message }}</p>
+    @enderror
+
+    <form action="{{ route('auth.register') }}" method="post">
         @csrf
 
-        <label for="fullname">Nombre Completo</label>
-        <input type="text" id="fullname" name="fullname" required >
+        @error('fullName')
+            <p>{{ $message }}</p>
+        @enderror
+        <label for="fullName">Nombre Completo</label>
+        <input type="text" id="fullName" name="fullName" value="{{ old("fullName") }}" required >
 
+        @error('email')
+            <p>{{ $message }}</p>
+        @enderror
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required >
+        <input type="email" id="email" name="email" value="{{ old("email") }}" required >
 
+        @error('password')
+            <p>{{ $message }}</p>
+        @enderror
         <label for="password">Contraseña</label>
         <input type="password" id="password" name="password" required >
 
