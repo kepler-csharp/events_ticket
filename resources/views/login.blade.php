@@ -4,6 +4,11 @@
 @section("content")
     <h1>LOGUEAATE</h1>
 
+    @if($errors->has("message"))
+        <p>{{ $errors->first("message") }}</p>
+    @endif
+
+
     <form action="{{ route('auth.login') }}" method="post">
         @csrf
 
