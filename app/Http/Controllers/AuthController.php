@@ -8,10 +8,38 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+
+    // Utils
+    public function saveSession($token) {
+        // Save token in memory
+        session()->put('token', $token);
+
+        // Destructuring token
+        $userData = json_decode(base64_decode(
+            // Separating token by doubts (.)
+            explode('.', $token)[1]
+        ), true); // True means that it will return the result as an array
+
+        $user = [
+            'id' => $userData['sub'],
+            'fullname' => $userData['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+            'email' => $userData['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
+            'role' => $userData['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+        ];
+
+        // Save user in Auth
+        session()->put('user', $user);
+    }
+
+    // Rendering pages
     public function renderRegister() {
         return view('register');
     }
+    public function renderLogin() {
+        return view('login');
+    }
 
+    // Logic Functions
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -36,17 +64,12 @@ class AuthController extends Controller
             ])->withInput();
         }
 
-        // Save token in memory
-        session("token", $response->json()["accessToken"]);
+        // Set session of user
+        $this->saveSession($response->json()["accessToken"]);
 
         // Return to catalog
         return redirect('/');
     }
-
-    public function renderLogin() {
-        return view('login');
-    }
-
     public function login(Request $request) {
         $data = $request->validate(["email" => "required|email", "password" => "required"]);
 
@@ -61,12 +84,12 @@ class AuthController extends Controller
         // Check that the user is authorized
         if(!$response->successful()) {
             return back()->withErrors([
-                "message" => "Invalid Credentials"
+                "failedReq" => "Invalid Credentials"
             ]);
         }
 
-        // Save token in laravel memory
-        session("token", $response->json()["accessToken"]);
+        // Set session of user
+        $this->saveSession($response->json()["accessToken"]);
 
         // Redirect to catalog
         return redirect("/");

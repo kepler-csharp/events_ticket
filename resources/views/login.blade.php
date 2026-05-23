@@ -1,13 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app') <!-- Change it to one that has no header, footer and navbar -->
 @section("title", "Login")
 
 @section("content")
     <h1>LOGUEAATE</h1>
 
-    @if($errors->has("message"))
-        <p>{{ $errors->first("message") }}</p>
-    @endif
-
+    @error('failedReq')
+        <p>{{$message }}</p>
+    @enderror
 
     <form action="{{ route('auth.login') }}" method="post">
         @csrf
