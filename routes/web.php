@@ -15,4 +15,5 @@ Route::post("/register", [AuthController::class, 'register'])->name('auth.regist
 // Protected routes
 Route::middleware(ValidateTokenMiddleware::class)->group(function () {
     Route::get('/', [CatalogController::class, 'index'])->name('catalog.index');
+    Route::post('/', [CatalogController::class, 'searchEvent'])->name('catalog.search');
 });

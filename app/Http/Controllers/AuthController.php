@@ -85,7 +85,7 @@ class AuthController extends Controller
         if(!$response->successful()) {
             return back()->withErrors([
                 "failedReq" => "Invalid Credentials"
-            ]);
+            ])->withInput();
         }
 
         // Set session of user
