@@ -8,19 +8,23 @@ use Illuminate\Support\Str;
 
 class CatalogController extends Controller
 {
+    private $url;
+
+    public function __construct() {
+        $this->url = config('api.url').'events';
+    }
+
     public function index()
     {
         // Getting events data
-        $url = env('API_URL').'events';
-
-        $response = Http::get($url);
+        $response = Http::get($this->url);
 
         // Checking response
-        if(!$response->succesful()) {
+        if(!$response->successful()) {
             return back()->withErrors([
                 "failedReq" => "The request failed. Server may be down."
-            ]);
-        }->withInput();
+            ])->withInput();
+        }
 
         // Passing data to view
         $events = $response->json()['data']['items'];
@@ -28,15 +32,15 @@ class CatalogController extends Controller
         return view('catalog', compact('events'));
     }
 
-    public function searchEvent(Request $request) {
+    public function search(Request $request) {
+        // PENDING THAT THE REQUEST IS NOT EMPTY
+
         // Getting event name
-        $data = $request->validate([ "eventName" => "required" ])
+        $data = $request->validate([ "eventName" => "required" ]);
         $eventName = $data['eventName'];
 
         // Making request
-        $url = env('API_URL').'events';
-
-        $response = Http::get($url);
+        $response = Http::get($this->url);
 
         // Checking response
         if($response->status() == 500) {
@@ -44,23 +48,38 @@ class CatalogController extends Controller
                 "failedReq" => "The request failed. Server may be down."
             ])->withInput();
         }
-        
-        // Filtering by event name
-        $events = $response->json()['data']['items']
 
-        $filteredEvents = $events->filter(fn($event) => Str::lower($event->name) == Str::lower($eventName));
+        // Filtering by event name
+        $events = collect($response->json()['data']['items']); // Converting into collection
+
+        $filteredEvents = $events->filter(
+            fn($event) =>
+                Str::contains(Str::lower($event['name']), Str::lower($eventName))
+        )->values();
 
         // Passing data to view
-        return view('catalog', compact('filteredEvents'));
+        return view(
+            'catalog',
+            [
+                'events' => $filteredEvents
+            ]
+        );
     }
 
-    public function filterEvents(Request $request) {
-        // Making request
-        $url = env('API_URL').'events'
-
-        $response = Http:get($url)
-        
+    // PENDING
+    public function filter(Request $request) {
         // Getting filters
-        
+        $filters = $request->validate([ 'filters' => 'required|array|min:1' ]);
+
+        // Making request
+        $response = Http::get($this->url);
+
+        // Filtering response
+        dd($filters);
+    }
+
+    // PENDING
+    public function paginate(Request $request) {
+        //....
     }
 }

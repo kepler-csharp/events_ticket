@@ -8,7 +8,7 @@
     @enderror
 
     <!-- Search Bar -->
-    <form action="{{ catalog.search }}" method="post">
+    <form action="{{ route('catalog.search') }}" method="post">
         @csrf
 
         <label for="eventName">Search any event: </label>
@@ -41,7 +41,7 @@
 
     <!-- Displaying events catalog -->
     <section>
-        @if($events->count() > 0)
+        @if(count($events) > 0)
             @foreach($events as $event)
                 <x-event-card :data="$event" />
             @endforeach

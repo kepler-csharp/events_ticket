@@ -29,5 +29,6 @@
         Thanks for visiting us
     </footer>
 
+    @stack('scripts')
 </body>
 </html>

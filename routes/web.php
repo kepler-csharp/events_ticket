@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\EventController;
 use App\Http\Middleware\ValidateTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,11 @@ Route::post("/register", [AuthController::class, 'register'])->name('auth.regist
 
 // Protected routes
 Route::middleware(ValidateTokenMiddleware::class)->group(function () {
+    // Events
     Route::get('/', [CatalogController::class, 'index'])->name('catalog.index');
-    Route::post('/', [CatalogController::class, 'searchEvent'])->name('catalog.search');
+    Route::post('/', [CatalogController::class, 'search'])->name('catalog.search');
+
+    // Unique event
+    Route::get('/event/{id}', [EventController::class, 'index'])->name('event.index');
+    Route::post('/event/{id}', [EventController::class, 'displaySeats'])->name('event.display-seats');
 });

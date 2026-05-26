@@ -9,5 +9,5 @@
     <span>{{ $data['venueCity'] }}</span>
     <span>{{ $data['type'] == 1 ? 'Concierto' : 'Pelicula' }}</span>
 
-    <button>See more</button>
+    <a href="{{ route('event.index', $data['id']) }}">Buy a seat</a>
 </article>

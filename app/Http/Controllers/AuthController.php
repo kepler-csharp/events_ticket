@@ -83,6 +83,7 @@ class AuthController extends Controller
 
         // Check that the user is authorized
         if(!$response->successful()) {
+            dd($response);
             return back()->withErrors([
                 "failedReq" => "Invalid Credentials"
             ])->withInput();
