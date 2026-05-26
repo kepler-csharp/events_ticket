@@ -2,12 +2,202 @@
     'data'
 ])
 
-<article>
-    <img src="{{ $data['posterUrl'] }}" alt="{{ $data['name'] }}">
-    <h3>{{ $data['name'] }}</h3>
-    <p>{{ $data['description'] }}</p>
-    <span>{{ $data['venueCity'] }}</span>
-    <span>{{ $data['type'] == 1 ? 'Concierto' : 'Pelicula' }}</span>
+<style>
+    /* scoped within blade component, declared once */
+    .ev-card {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: var(--t);
+        position: relative;
+        cursor: pointer;
+    }
 
-    <a href="{{ route('event.index', $data['id']) }}">Buy a seat</a>
-</article>
+    .ev-card:hover {
+        border-color: var(--line-or);
+        transform: translateY(-4px);
+        box-shadow:
+            0 0 0 1px var(--line-or),
+            0 8px 32px rgba(0,0,0,0.4),
+            0 0 40px var(--or-glow-s);
+    }
+
+    /* top corner accent */
+    .ev-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--or) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity var(--t);
+    }
+
+    .ev-card:hover::before { opacity: 1; }
+
+    /* Poster */
+    .ev-card-img-wrap {
+        position: relative;
+        height: 190px;
+        overflow: hidden;
+        background: var(--bg-card2);
+    }
+
+    .ev-card-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+        filter: brightness(0.85) saturate(0.9);
+    }
+
+    .ev-card:hover .ev-card-img-wrap img {
+        transform: scale(1.05);
+        filter: brightness(0.95) saturate(1);
+    }
+
+    .ev-card-img-wrap::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 40%, var(--bg-card) 100%);
+    }
+
+    /* Type badge floated on image */
+    .ev-type-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 2;
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.28rem 0.65rem;
+        border-radius: 4px;
+        background: rgba(13,14,16,0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--line);
+        color: var(--txt-dim);
+    }
+
+    /* Body */
+    .ev-card-body {
+        padding: 1.25rem 1.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        flex: 1;
+    }
+
+    .ev-card-name {
+        font-family: var(--font-head);
+        font-size: 1.1rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--txt);
+        line-height: 1.2;
+    }
+
+    .ev-card-desc {
+        font-size: 0.84rem;
+        color: var(--txt-dim);
+        line-height: 1.55;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .ev-card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.2rem;
+    }
+
+    /* Footer */
+    .ev-card-footer {
+        padding: 1rem 1.4rem;
+        border-top: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .ev-city {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--txt-faint);
+        letter-spacing: 0.06em;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .ev-city::before {
+        content: '◎';
+        color: var(--or);
+        font-size: 0.65rem;
+    }
+
+    .ev-card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--or);
+        text-decoration: none;
+        padding: 0.42rem 0.9rem;
+        border: 1px solid var(--line-or);
+        border-radius: 5px;
+        transition: var(--t);
+    }
+
+    .ev-card-link::after { content: '→'; }
+
+    .ev-card-link:hover {
+        background: var(--or-glow);
+        box-shadow: 0 0 12px var(--or-glow);
+    }
+</style>
+
+<article class="ev-card">
+    <div class="ev-card-img-wrap">
+        <img src="{{ $data['posterUrl'] }}" alt="{{ $data['name'] }}">
+        <span class="ev-type-badge">
+            {{ $data['type'] == 1 ? 'Concierto' : 'Pelicula' }}
+        </span>
+    </div>
+
+    <div class="ev-card-body">
+        <h3 class="ev-card-name">{{ $data['name'] }}</h3>
+        <p class="ev-card-desc">{{ $data['description'] }}</p>
+        <div class="ev-card-meta">
+            @if(isset($data['isActive']))
+                @if($data['isActive'])
+                    <span class="badge badge-green">● Activo</span>
+                @else
+                    <span class="badge badge-red">● Inactivo</span>
+                @endif
+            @endif
+        </div>
+    </div>
+
+    <div class="ev-card-footer">
+        <span class="ev-city">{{ $data['venueCity'] }}</span>
+        <a href="{{ route('event.index', $data['id']) }}" class="ev-card-link">Ver Evento</a>
+    </div>

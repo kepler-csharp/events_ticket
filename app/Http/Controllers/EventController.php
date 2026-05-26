@@ -33,13 +33,10 @@ class EventController extends Controller
         return view('event.index', compact('event', 'showtimes'));
     }
 
-    public function displaySeats($id, Request $request) {
-        // Receiving showtime id
-        $showtimeId = $request->all()['showtimeId'];
-
+    public function displaySeats($showtimeId) {
         // Making request for available seats
         $seatResponse = Http::get($this->url."showtimes/".$showtimeId."/seats");
-        $showtimeResponse = Http::get($this->url."showtimes/".$id);
+        $showtimeResponse = Http::get($this->url."showtimes/".$showtimeId);
 
         // Checking response
         if(!$showtimeResponse->successful() || !$seatResponse->successful()) {
@@ -53,5 +50,19 @@ class EventController extends Controller
         $seats = $seatResponse->json()['data'];
 
         return view("event.seats", compact("showtime", "seats"));
+    }
+
+    public function buySeats($showtimeId, Request $request) {
+        $seats = json_decode(($request->validate([ "seats" => "required" ])['seats']), true);
+        $body = [
+            "showtimeId" => $showtimeId,
+            "seats" => $seats
+        ];
+
+        //dd($body);
+        // Making request to reserve seats
+        $seatResponse = Http::post($this->url."seats/reserve", $body);
+
+        dd($seatResponse, session("token"), session("user"));
     }
 }

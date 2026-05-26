@@ -83,7 +83,6 @@ class AuthController extends Controller
 
         // Check that the user is authorized
         if(!$response->successful()) {
-            dd($response);
             return back()->withErrors([
                 "failedReq" => "Invalid Credentials"
             ])->withInput();
@@ -94,5 +93,29 @@ class AuthController extends Controller
 
         // Redirect to catalog
         return redirect("/");
+    }
+    public function logout() {
+        // Checking there is any active session
+        if(!session()->has('token') || !session()->has('user')) {
+            return back()->withErrors([
+                "failedReq" => "There is not any session"
+            ]);
+        }
+
+        // Making http request
+        $response = Http::post(env("API_URL")."auth/logout");
+
+        // Checking response
+        if(!$response->successful()) {
+            return back()->withErrors([
+                "failedReq" => "Server probably down"
+            ]);
+        }
+
+        // Emptying memory token && session memory user
+        session()->flush();
+
+        // Returning response
+        return redirect("/login");
     }
 }

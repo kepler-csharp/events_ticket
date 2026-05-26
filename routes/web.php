@@ -13,13 +13,19 @@ Route::post("/login", [AuthController::class, 'login'])->name('auth.login');
 Route::get('/register', [AuthController::class, 'renderRegister'])->name('auth.register');
 Route::post("/register", [AuthController::class, 'register'])->name('auth.register');
 
+Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
 // Protected routes
 Route::middleware(ValidateTokenMiddleware::class)->group(function () {
     // Events
     Route::get('/', [CatalogController::class, 'index'])->name('catalog.index');
     Route::post('/', [CatalogController::class, 'search'])->name('catalog.search');
+    //Route::post('/');
 
     // Unique event
     Route::get('/event/{id}', [EventController::class, 'index'])->name('event.index');
-    Route::post('/event/{id}', [EventController::class, 'displaySeats'])->name('event.display-seats');
+
+    // Seats
+    Route::get('/event/showtime/{id}', [EventController::class, 'displaySeats'])->name('event.display-seats');
+    Route::post('/event/showtime/{id}', [EventController::class, 'buySeats'])->name('event.buy-seats');
 });
