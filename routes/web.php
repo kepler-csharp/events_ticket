@@ -7,7 +7,7 @@ use App\Http\Middleware\ValidateTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
 // Auth
-Route::get('/login', [AuthController::class, 'renderLogin'])->name('auth.login');
+Route::get('/login', [AuthController::class, 'renderLogin'])->name('auth.login.form');
 Route::post("/login", [AuthController::class, 'login'])->name('auth.login');
 
 //Route::get('/register', [AuthController::class, 'renderRegister'])->name('auth.register');
