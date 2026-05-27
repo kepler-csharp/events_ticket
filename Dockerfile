@@ -56,8 +56,6 @@ FROM php:8.3-fpm-alpine
 
 WORKDIR /app
 
-ENV APP_ENV=production
-
 # Runtime deps
 RUN apk add --no-cache \
     nginx \
@@ -81,10 +79,6 @@ RUN apk add --no-cache \
     zip \
     bcmath \
     opcache
-
-# Opcache configuration
-RUN echo "opcache.enable=1\nopcache.memory_consumption=128\nopcache.max_accelerated_files=10000\nopcache.validate_timestamps=0" \
-    > /usr/local/etc/php/conf.d/opcache.ini
 
 # Copiar app compilada
 COPY --from=build /app /app
