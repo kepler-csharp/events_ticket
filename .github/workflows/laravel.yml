@@ -50,25 +50,28 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: root
+          username: deploy
           key: ${{ secrets.SSH_KEY }}
+          envs: GHCR_TOKEN,GITHUB_REPOSITORY,APP_KEY,APP_URL,API_URL
           script: |
-            echo "Logging into GHCR..."
-            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-
-            echo "Pulling latest image..."
-            docker pull ghcr.io/${{ github.repository }}:latest
-
-            echo "Stopping old container..."
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u github-actions --password-stdin
+            docker pull ghcr.io/$GITHUB_REPOSITORY:latest
             docker stop ticketevents_container || true
             docker rm ticketevents_container || true
-
-            echo "Running new container..."
             docker run -d \
               --name ticketevents_container \
               -p 8080:80 \
               --restart always \
-              -e APP_KEY="${{ secrets.APP_KEY }}" \
-              -e APP_URL="${{ secrets.APP_URL }}" \
-              -e API_URL="${{ secrets.API_URL }}" \
-              ghcr.io/${{ github.repository }}:latest
+              -e APP_KEY="$APP_KEY" \
+              -e APP_URL="$APP_URL" \
+              -e API_URL="$API_URL" \
+              ghcr.io/$GITHUB_REPOSITORY:latest
+            # Health check básico
+            sleep 5
+            docker ps | grep ticketevents_container || (echo "Container failed to start" && exit 1)
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          APP_KEY: ${{ secrets.APP_KEY }}
+          APP_URL: ${{ secrets.APP_URL }}
+          API_URL: ${{ secrets.API_URL }}
