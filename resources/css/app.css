@@ -1,0 +1,67 @@
+@import './layout.css';
+@import './components/event-card.css';
+@import './event/index.css';
+@import './event/seats.css';
+@import './catalog.css';
+
+/* ─── RESET & BASE ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --or:        #FD7B41;   /* naranja primario */
+    --or-dim:    #b84e1f;   /* naranja apagado */
+    --or-glow:   rgba(253, 123, 65, 0.18);
+    --or-glow-s: rgba(253, 123, 65, 0.08);
+    --tan:       #EDBF9B;   /* terracota/secundario */
+    --ink:       #3C4044;   /* gris carbón */
+    --ash:       #DDDCDB;   /* gris claro */
+
+    --bg:        #0d0e10;
+    --bg-panel:  #12141a;
+    --bg-card:   #161920;
+    --bg-card2:  #1c1f28;
+    --line:      rgba(255,255,255,0.06);
+    --line-or:   rgba(253,123,65,0.25);
+
+    --txt:       #e8e6e3;
+    --txt-dim:   #7a7f8a;
+    --txt-faint: #3d4150;
+
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+
+    --t: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--txt);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* scanline texture overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+}

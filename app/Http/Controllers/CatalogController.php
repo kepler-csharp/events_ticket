@@ -16,6 +16,8 @@ class CatalogController extends Controller
 
     public function index()
     {
+        $search = request()->query('search');
+
         // Getting events data
         $response = Http::get($this->url);
 
@@ -26,14 +28,53 @@ class CatalogController extends Controller
             ])->withInput();
         }
 
-        // Passing data to view
-        $events = $response->json()['data']['items'];
+        $events = collect($response->json()['data']['items']);
+        // Filtering data
+
+        // By search bar
+        $search = request()->query('name');
+
+        if($search) {
+            $events = $events->filter(
+                fn($event) =>
+                Str::contains(Str::lower($event['name']), Str::lower($search))
+            )->values();
+        }
+
+        // By filters
+        $active = request()->query('active');
+
+        if($active) {
+            $events = $events->filter(
+                fn($event) =>
+                    $event['active'] == true
+            )->values();
+        }
+
+        $movies = request()->query('movies');
+
+        if($movies) {
+            $events = $events->filter(
+                fn($event) =>
+                    $event['type'] == '0'
+            )->values();
+        }
+
+        $concerts = request()->query('concerts');
+
+        if($concerts) {
+            $events = $events->filter(
+                fn($event) =>
+                $event['type'] == '1'
+            )->values();
+        }
 
         return view('catalog', compact('events'));
     }
 
     public function search(Request $request) {
-        // PENDING THAT THE REQUEST IS NOT EMPTY
+        // Getting params
+        $params = $request->query();
 
         // Getting event name
         $data = $request->validate([ "eventName" => "required" ]);

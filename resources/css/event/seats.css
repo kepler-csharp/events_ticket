@@ -1,0 +1,229 @@
+/* ─── SEATS PAGE ──────────────────────────────────────────── */
+
+.seats-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 2rem;
+}
+
+/* ── Seat map panel ── */
+.seats-container {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+}
+
+.seats-container-title {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--txt);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Legend */
+.seats-legend {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--txt-dim);
+}
+
+.legend-seat {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.legend-seat.available {
+    background: #4CAF50;
+    box-shadow: 0 0 6px rgba(76,175,80,0.4);
+}
+
+.legend-seat.occupied {
+    background: #f44336;
+    box-shadow: 0 0 6px rgba(244,67,54,0.3);
+}
+
+.legend-seat.selected {
+    background: var(--or);
+    box-shadow: 0 0 6px var(--or-glow);
+}
+
+/* Seat map canvas wrapper */
+#seat-map {
+    background: var(--bg-card2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    min-height: 400px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── Sidebar summary ── */
+.showtime-info {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+    position: sticky;
+    top: 84px;
+    height: fit-content;
+}
+
+.showtime-info-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.showtime-info-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--or);
+    flex-shrink: 0;
+}
+
+.info-item {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.info-item:last-of-type {
+    border-bottom: none;
+}
+
+.info-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin-bottom: 0.35rem;
+}
+
+.info-value {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--txt);
+}
+
+.info-value.price {
+    color: var(--or);
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* Selected seats box */
+.selected-seats-display {
+    background: var(--bg-card2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 1rem;
+    margin: 1.25rem 0;
+    min-height: 52px;
+}
+
+.selected-seats-display p {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin: 0 0 0.4rem;
+}
+
+.selected-seats-display .seats-list {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--or);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+/* Total price block */
+.total-price {
+    background: var(--or-glow);
+    border: 1px solid var(--line-or);
+    border-radius: var(--r-md);
+    padding: 1rem 1.25rem;
+    text-align: center;
+    margin: 1.25rem 0;
+}
+
+.total-price .label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--or);
+    opacity: 0.8;
+}
+
+.total-price .amount {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--or);
+    line-height: 1.1;
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-actions .btn-primary,
+.form-actions .btn-ghost {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .seats-layout {
+        grid-template-columns: 1fr;
+    }
+    .showtime-info {
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    .seats-container { padding: 1.25rem; }
+    .showtime-info { padding: 1.25rem; }
+    .seats-legend { gap: 1rem; }
+    #seat-map { min-height: 300px; }
+}

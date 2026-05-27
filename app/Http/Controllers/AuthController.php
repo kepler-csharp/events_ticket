@@ -8,7 +8,6 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-
     // Utils
     public function saveSession($token) {
         // Save token in memory
@@ -94,6 +93,7 @@ class AuthController extends Controller
         // Redirect to catalog
         return redirect("/");
     }
+
     public function logout() {
         // Checking there is any active session
         if(!session()->has('token') || !session()->has('user')) {
@@ -104,7 +104,7 @@ class AuthController extends Controller
 
         // Making http request
         $response = Http::post(env("API_URL")."auth/logout");
-
+        dd($response);
         // Checking response
         if(!$response->successful()) {
             return back()->withErrors([

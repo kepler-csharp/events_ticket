@@ -51,18 +51,4 @@ class EventController extends Controller
 
         return view("event.seats", compact("showtime", "seats"));
     }
-
-    public function buySeats($showtimeId, Request $request) {
-        $seats = json_decode(($request->validate([ "seats" => "required" ])['seats']), true);
-        $body = [
-            "showtimeId" => $showtimeId,
-            "seats" => $seats
-        ];
-
-        //dd($body);
-        // Making request to reserve seats
-        $seatResponse = Http::post($this->url."seats/reserve", $body);
-
-        dd($seatResponse, session("token"), session("user"));
-    }
 }
