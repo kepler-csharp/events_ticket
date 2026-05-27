@@ -68,7 +68,6 @@ jobs:
               --name ticketevents_container \
               -p 8080:80 \
               --restart always \
-              -e APP_ENV="${{ secrets.APP_ENV }}" \
               -e APP_KEY="${{ secrets.APP_KEY }}" \
               -e APP_URL="${{ secrets.APP_URL }}" \
               -e API_URL="${{ secrets.API_URL }}" \
