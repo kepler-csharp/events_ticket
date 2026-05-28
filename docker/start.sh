@@ -1,8 +1,12 @@
 #!/bin/sh
 
+# Crear .env si no existe
 if [ ! -f .env ]; then
     cp .env.example .env
 fi
+
+# Inyectar variables de entorno
+sed -i "s|^APP_KEY=.*|APP_KEY=${APP_KEY}" .env
 
 php artisan optimize:clear || true
 php artisan config:cache || true

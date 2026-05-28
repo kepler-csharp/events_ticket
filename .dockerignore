@@ -1,7 +1,0 @@
-.git
-.env
-.env.local
-.env.*.local
-node_modules
-storage/logs/*
-storage/framework/cache/*
