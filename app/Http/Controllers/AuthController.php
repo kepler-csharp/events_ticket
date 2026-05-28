@@ -8,6 +8,12 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+    private $url;
+
+    public function __construct() {
+        $this->url = config('api.url');
+    }
+
     // Utils
     public function saveSession($token) {
         // Save token in memory
@@ -52,9 +58,7 @@ class AuthController extends Controller
         ]);
 
         // Make request to API intermediary
-        $url = env("API_URL") . "auth/register-receptionist";
-
-        $response = Http::post($url, $data);
+        $response = Http::post($this->url."auth/register-receptionist", $data);
 
         // Check errors
         if($response->status() == 401) {
@@ -73,9 +77,7 @@ class AuthController extends Controller
         $data = $request->validate(["email" => "required|email", "password" => "required"]);
 
         // Make request to API intermediary
-        $url = env("API_URL")."auth/login";
-
-        $response = Http::post($url, [
+        $response = Http::post($this->url."auth/login", [
             "email" => $data["email"],
             "password" => $data["password"]
         ]);
@@ -103,8 +105,8 @@ class AuthController extends Controller
         }
 
         // Making http request
-        $response = Http::post(env("API_URL")."auth/logout");
-        dd($response);
+        $response = Http::post($this->url."auth/logout");
+
         // Checking response
         if(!$response->successful()) {
             return back()->withErrors([
