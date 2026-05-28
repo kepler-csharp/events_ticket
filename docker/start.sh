@@ -5,6 +5,7 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
+echo "APP_KEY=$APP_KEY"
 # Inyectar variables de entorno
 sed -i "s|^APP_KEY=.*|APP_KEY=${APP_KEY}" .env
 
