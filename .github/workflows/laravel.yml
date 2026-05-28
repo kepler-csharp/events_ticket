@@ -54,15 +54,20 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u github-actions --password-stdin
-            docker pull ghcr.io/$GITHUB_REPOSITORY:latest
+
+            IMAGE="ghcr.io/${GITHUB_REPOSITORY}:latest"
+            
+            docker pull "$IMAGE"
             docker stop ticketevents_container || true
             docker rm ticketevents_container || true
+            
             docker run -d \
               --name ticketevents_container \
               -p 8080:80 \
               --restart always \
               -e APP_KEY="${{ secrets.APP_KEY }}" \
-              ghcr.io/$GITHUB_REPOSITORY:latest
+              "$IMAGE"
+              
             # Health check básico
             sleep 5
-            docker ps | grep ticketevents_container || (echo "Container failed to start" && exit 1
+            docker ps | grep ticketevents_container || (echo "Container failed to start" && exit 1)
