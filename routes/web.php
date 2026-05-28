@@ -25,4 +25,5 @@ Route::middleware(ValidateTokenMiddleware::class)->group(function () {
 
     // Seats
     Route::get('/event/showtime/{id}', [EventController::class, 'displaySeats'])->name('event.display-seats');
+    Route::post('/event/showtime/{id}', [EventController::class, 'buySeats'])->name('event.buy-seats');
 });

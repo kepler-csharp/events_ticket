@@ -46,15 +46,26 @@
                 <div class="amount" id="totalPrice">$0.00</div>
             </div>
 
-            <form action="" method="post" class="form-actions">
+            <form action="{{ route('event.buy-seats', request()->route('id')) }}" method="post" class="form-actions">
                 @csrf
                 <h2 class="seats-container-title">Usuario</h2>
 
-                <input type="text" placeholder="user@example.com" name="email" required>
+                @error('email')
+                    <span class="alert-error">{{ $message }}</span>
+                @enderror
+                <input type="email" placeholder="user@example.com" name="email" value="{{ old("email") }}" required>
 
                 <div class="label">-> Si el usuario no está registrado</div>
-                <input type="text" placeholder="Abraham Martinez" name="fullname">
-                <input type="text" placeholder="3092374321" name="phone">
+
+                @error('fullname')
+                <span class="alert-error">{{ $message }}</span>
+                @enderror
+                <input type="text" placeholder="Abraham Martinez" name="fullname" value="{{ old("fullname") }}">
+
+                @error('phone')
+                <span class="alert-error">{{ $message }}</span>
+                @enderror
+                <input type="text" placeholder="3092374321" name="phone" value="{{ old("phone") }}">
 
                 <input type="hidden" name="seats" id="seatsInput" />
 
@@ -88,6 +99,7 @@
 
     @push('scripts')
         <script>
+            // Passing vars to javascript and converting them as a safe way
             window.seats = @js($seats);
             window.showtime = @js($showtime);
         </script>

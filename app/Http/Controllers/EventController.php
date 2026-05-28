@@ -51,4 +51,37 @@ class EventController extends Controller
 
         return view("event.seats", compact("showtime", "seats"));
     }
+
+    public function buySeats(Request $request, $id) {
+        $data = request()->validate(["seats" => "required", "email" => "required|email", "fullname" => "sometimes", "phone" => "sometimes"]);
+
+        // Check the user exists
+        $userResponse = Http::post($this->url."receptionist/customers/lookup".$id, $data['email']);
+
+        // Creating user if wasn't succesfull
+        if($userResponse->getStatusCode() == 404 && (!isset($data['fullname']) && !isset($data['phone']))) {
+            return back()->withErrors([
+                "email" => "That user doesn't exists. Please, create it below"
+            ])->withInput();
+        } else if ($userResponse->getStatusCode() == 404) {
+            $dataUser = request()->validate(["fullname" => "required|regex:/^[\pL\s]+$/u|min:3|max:30", "phone" => "required|numeric"]);
+
+            // Creating user
+            $newUserResponse = Http::withToken(session('token'))
+                ->withOptions(['debug' => true])
+                ->post($this->url."receptionist/customers", [
+                "fullName" => $data["fullname"],
+                "phone" => $data["phone"],
+                "email" => $data["email"],
+            ]);
+        }
+
+        // Reserve seats
+        /*$orderResponse = Http::post($this->url."receptionist/checkout", [
+            $customerUserId;
+        ]);*/
+
+        // Redirect to order view
+
+    }
 }
