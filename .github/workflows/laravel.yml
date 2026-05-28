@@ -52,7 +52,6 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: root
           key: ${{ secrets.SSH_KEY }}
-          envs: GHCR_TOKEN,GITHUB_REPOSITORY,APP_KEY,APP_URL,API_URL
           script: |
             echo "$GHCR_TOKEN" | docker login ghcr.io -u github-actions --password-stdin
             docker pull ghcr.io/$GITHUB_REPOSITORY:latest
@@ -62,16 +61,8 @@ jobs:
               --name ticketevents_container \
               -p 8080:80 \
               --restart always \
-              -e APP_KEY="$APP_KEY" \
-              -e APP_URL="$APP_URL" \
-              -e API_URL="$API_URL" \
+              -e APP_KEY="${{ secrets.APP_KEY }}" \
               ghcr.io/$GITHUB_REPOSITORY:latest
             # Health check básico
             sleep 5
-            docker ps | grep ticketevents_container || (echo "Container failed to start" && exit 1)
-        env:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          APP_KEY: ${{ secrets.APP_KEY }}
-          APP_URL: ${{ secrets.APP_URL }}
-          API_URL: ${{ secrets.API_URL }}
+            docker ps | grep ticketevents_container || (echo "Container failed to start" && exit 1
