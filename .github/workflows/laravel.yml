@@ -55,7 +55,7 @@ jobs:
           script: |
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u github-actions --password-stdin
 
-            IMAGE="ghcr.io/${GITHUB_REPOSITORY}:latest"
+            IMAGE="ghcr.io/${{ github.repository }}:latest"
             
             docker pull "$IMAGE"
             docker stop ticketevents_container || true
