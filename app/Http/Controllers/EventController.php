@@ -80,8 +80,8 @@ class EventController extends Controller
             // Checking response
             if(!$userResponse->successful()) {
                 return back()->withErrors([
-                    "failedReq" => "The request failed. Server may be down."
-                ]);
+                    "failedReq" => $userResponse->json('message')
+                ])->withInput();
             }
         }
 
@@ -99,17 +99,11 @@ class EventController extends Controller
                 "seatIds" => $seats
         ]);
 
-        /*dd($seatResponse, [
-            "customerUserId" => session("order")['userId'],
-            "showtimeId" => $id,
-            "seatIds" => $seats
-        ]);*/
-
         // Checking seat reserve response
         if(!$seatResponse->successful()) {
             return back()->withErrors([
-                "failedReq" => "The request failed. Server may be down."
-            ]);
+                "failedReq" => $seatResponse->json('message')
+            ])->withInput();
         }
 
         // Redirect to order confirmation view

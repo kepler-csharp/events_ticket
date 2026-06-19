@@ -32,13 +32,13 @@
                     <div class="payment-info-item">
                         <span class="payment-info-label">Hora de Inicio</span>
                         <span class="payment-info-value">
-                        <span class="payment-time-badge">{{ $showtime['startTime'] }}</span>
+                        <span class="payment-time-badge">{{ \Carbon\Carbon::parse($showtime['startTime'])->format('d/m/Y H:i') }}</span>
                     </span>
                     </div>
                     <div class="payment-info-item">
                         <span class="payment-info-label">Hora de Fin</span>
                         <span class="payment-info-value">
-                        <span class="payment-time-badge">{{ $showtime['endTime'] }}</span>
+                        <span class="payment-time-badge">{{ \Carbon\Carbon::parse($showtime['endTime'])->format('d/m/Y H:i') }}</span>
                     </span>
                     </div>
                 </div>

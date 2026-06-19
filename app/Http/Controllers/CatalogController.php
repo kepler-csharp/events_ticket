@@ -22,7 +22,7 @@ class CatalogController extends Controller
         // Checking response
         if(!$response->successful()) {
             return back()->withErrors([
-                "failedReq" => "The request failed. Server may be down."
+                "failedReq" => $response->json('message')
             ]);
         }
 
