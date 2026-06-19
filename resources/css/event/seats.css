@@ -69,14 +69,29 @@
     box-shadow: 0 0 6px var(--or-glow);
 }
 
-/* Seat map canvas wrapper */
-#seat-map {
+/* Scenario */
+
+#scenario-container {
     background: var(--bg-card2);
     border: 1px solid var(--line);
     border-radius: var(--r-md);
     min-height: 400px;
     overflow: hidden;
     position: relative;
+}
+
+#scenario-draw {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 5rem;
+    background-color: var(--or);;
+    margin: 0 auto;
+    margin-top: 4rem;
+    border-radius: 0.5rem 0.5rem 2rem 2rem;
+    font-family: var(--font-mono);
+    font-weight: bold;
 }
 
 /* ── Sidebar summary ── */

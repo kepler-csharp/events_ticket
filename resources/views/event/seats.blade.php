@@ -38,8 +38,15 @@
                 </div>
             </div>
 
-            <!-- Displaying of seats with JS -->
-            <div id="seat-map"></div>
+            <div id="scenario-container">
+                <!-- Scenario -->
+                <div id="scenario-draw">
+                    <p>SCENARIO</p>
+                </div>
+
+                <!-- Displaying of seats with JS -->
+                <div id="seat-map"></div>
+            </div>
         </div>
 
         <!-- Showtime Info & Purchase -->

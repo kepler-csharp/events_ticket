@@ -20,9 +20,14 @@ class EventController extends Controller
         $showtimeResponse = Http::get($this->url."showtimes?eventId=".$id);
 
         // Checking response
-        if(!$eventResponse->successful() || !$showtimeResponse->successful()) {
+        if(!$eventResponse->successful()) {
             return back()->withErrors([
-                "failedReq" => "The request failed. Server may be down."
+                "failedReq" => $eventResponse->json('message')
+            ])->withInput();
+        }
+        if(!$showtimeResponse->successful()) {
+            return back()->withErrors([
+                "failedReq" => $eventResponse->json('message')
             ])->withInput();
         }
 
@@ -39,9 +44,14 @@ class EventController extends Controller
         $showtimeResponse = Http::get($this->url."showtimes/".$showtimeId);
 
         // Checking response
-        if(!$showtimeResponse->successful() || !$seatResponse->successful()) {
+        if(!$seatResponse->successful()) {
             return back()->withErrors([
-                "failedReq" => "The request failed. Server may be down."
+                "failedReq" => $seatResponse->json('message')
+            ])->withInput();
+        }
+        if(!$seatResponse->successful()) {
+            return back()->withErrors([
+                "failedReq" => $seatResponse->json('message')
             ])->withInput();
         }
 
@@ -70,7 +80,6 @@ class EventController extends Controller
 
             // Creating user
             $userResponse = Http::withToken(session('token'))
-                ->withOptions(['debug' => true])
                 ->post($this->url."receptionist/customers", [
                     "fullName" => $dataUser["fullname"],
                     "phone" => $dataUser["phone"],
