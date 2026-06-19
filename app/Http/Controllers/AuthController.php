@@ -105,7 +105,8 @@ class AuthController extends Controller
         }
 
         // Making http request
-        $response = Http::post($this->url."auth/logout");
+        $response = Http::withToken(session('token'))
+            ->post($this->url."auth/logout");
 
         // Checking response
         if(!$response->successful()) {
