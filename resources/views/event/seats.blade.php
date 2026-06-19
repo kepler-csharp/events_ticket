@@ -78,10 +78,10 @@
                 <input type="hidden" name="seats" id="seatsInput" />
 
                 <button type="submit" class="btn-primary" id="submitBtn">🎫 Registrar Compra</button>
-                <a href="{{ route('catalog.index') }}" class="btn-ghost" style="text-align: center; text-decoration: none;">Cancelar</a>
+                <a href="{{ route('catalog.index') }}" class="btn-ghost" style="text-align: center; text-decoration: none; ">Cancelar</a>
             </form>
 
-            <div class="showtime-info-title">Resumen de Función</div>
+            <div class="showtime-info-title" style="margin-top: 2rem;">Resumen de Función</div>
 
             <div class="info-item">
                 <div class="info-label">📅 Fecha</div>

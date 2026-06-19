@@ -321,6 +321,14 @@ Push to main
 
 ---
 
+## Changes Missing
+- Events Pagination
+- Seats selection fix (UX Error)
+- Keep selected seats fix (UX Error)
+- Select seats fix -> generate order (UX Error: Intermitent white screen showed between)
+
+---
+
 # 📄 License
 
 This project is intended for internal and educational use. All rights reserved.

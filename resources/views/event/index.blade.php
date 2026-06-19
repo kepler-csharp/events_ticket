@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Event Display')
+@section('title', 'Funciones de Evento')
 
 @section('content')
     <a href="{{ route('catalog.index') }}" class="back-link">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="meta-cell">
                     <div class="meta-key">Creado</div>
-                    <div class="meta-val">{{ $event['createdAt'] }}</div>
+                    <div class="meta-val">{{ \Carbon\Carbon::parse($event['createdAt'])->format('d/m/Y H:i') }}</div>
                 </div>
             </div>
         </div>
