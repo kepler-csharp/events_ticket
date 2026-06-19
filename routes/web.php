@@ -38,4 +38,9 @@ Route::middleware(ValidateTokenMiddleware::class)->group(function () {
     // Bills
     Route::get('/bill', [BillController::class, 'index'])->name('bill.index');
     Route::get('/bill/resend', [BillController::class, 'resend'])->name('bill.resend');
+
+    // Advisers
+    Route::get('/advisers', [])->name('advisers.index');
+    Route::get('/advisers/new', [])->name('advisers.new');
+    Route::post('/advisers/new', [])->name('advisers.store');
 });

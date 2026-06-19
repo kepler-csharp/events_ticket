@@ -1,0 +1,255 @@
+/* ═══════════════════════════════════════════════════════════════
+   ORDER PAYMENT — scoped styles
+   Requires variables from layouts/app.blade.php
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Page wrapper ───────────────────────────────────────────── */
+.payment-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+/* ─── Error banner ───────────────────────────────────────────── */
+.payment-page .order-error {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    border-radius: var(--r-md);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.88rem;
+    margin-bottom: 2rem;
+}
+
+/* ─── Page heading ───────────────────────────────────────────── */
+.payment-page-header {
+    margin-bottom: 2rem;
+}
+
+.payment-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 0.5rem;
+}
+
+.payment-title {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--txt);
+    line-height: 1.1;
+}
+
+.payment-title span {
+    color: var(--or);
+}
+
+/* ─── Two-column layout ──────────────────────────────────────── */
+.payment-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+/* ─── Panel ──────────────────────────────────────────────────── */
+.payment-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+}
+
+.payment-panel-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ─── Info items ─────────────────────────────────────────────── */
+.payment-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.payment-info-item:last-of-type {
+    border-bottom: none;
+}
+
+.payment-info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.payment-info-row .payment-info-item {
+    border-bottom: 1px solid var(--line);
+}
+
+.payment-info-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+}
+
+.payment-info-value {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--txt);
+}
+
+.payment-event-name {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.payment-time-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--txt-dim);
+    background: var(--bg-card2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    padding: 0.2rem 0.65rem;
+}
+
+.payment-unit-price {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--or);
+    font-weight: 600;
+}
+
+/* ─── Total block ────────────────────────────────────────────── */
+.payment-total-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--or-glow);
+    border: 1px solid var(--line-or);
+    border-radius: var(--r-md);
+    padding: 1rem 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.payment-total-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--or);
+    opacity: 0.75;
+}
+
+.payment-total-amount {
+    font-family: var(--font-head);
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--or);
+}
+
+/* ─── Payment form ───────────────────────────────────────────── */
+.payment-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.payment-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--txt-dim);
+    margin-bottom: 0.6rem;
+}
+
+.payment-select-wrap {
+    position: relative;
+}
+
+.payment-select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    color: var(--txt);
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    padding: 0.8rem 2.5rem 0.8rem 1rem;
+    cursor: pointer;
+    transition: border-color var(--t), box-shadow var(--t);
+    outline: none;
+}
+
+.payment-select:focus {
+    border-color: var(--or);
+    box-shadow: 0 0 0 3px rgba(253, 123, 65, 0.08), 0 0 20px var(--or-glow);
+    background: var(--bg-card2);
+}
+
+.payment-select option {
+    background: var(--bg-card);
+    color: var(--txt);
+}
+
+.payment-select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--txt-faint);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+/* ─── Actions ────────────────────────────────────────────────── */
+.payment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.payment-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 720px) {
+    .payment-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-title { font-size: 1.5rem; }
+    .payment-panel { padding: 1.25rem; }
+    .payment-info-row { grid-template-columns: 1fr; }
+}

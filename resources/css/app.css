@@ -4,6 +4,7 @@
 @import './event/seats.css';
 @import './catalog.css';
 @import './order.css';
+@import './bill.css';
 
 /* ─── RESET & BASE ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

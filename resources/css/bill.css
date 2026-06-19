@@ -1,0 +1,271 @@
+/* ═══════════════════════════════════════════════════════════════
+   TICKET VIEW — scoped styles
+   Requires variables from layouts/app.blade.php
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Page wrapper ───────────────────────────────────────────── */
+.ticket-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+/* ─── Page heading ───────────────────────────────────────────── */
+.ticket-page-header {
+    margin-bottom: 2rem;
+}
+
+.ticket-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 0.5rem;
+}
+
+.ticket-title {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--txt);
+    line-height: 1.1;
+}
+
+.ticket-title span {
+    color: var(--or);
+}
+
+/* ─── Layout ─────────────────────────────────────────────────── */
+.ticket-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+/* ─── Panel ──────────────────────────────────────────────────── */
+.ticket-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.ticket-panel:last-child {
+    margin-bottom: 0;
+}
+
+.ticket-panel-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.ticket-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--r-md);
+    border: 1px solid var(--line);
+}
+
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.ticket-table thead tr {
+    background: var(--bg-card2);
+    border-bottom: 1px solid var(--line);
+}
+
+.ticket-table th {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    font-weight: 600;
+    padding: 0.85rem 1rem;
+    text-align: left;
+}
+
+.ticket-table tbody tr {
+    border-bottom: 1px solid var(--line);
+    transition: background var(--t);
+}
+
+.ticket-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.ticket-table tbody tr:hover {
+    background: var(--bg-card2);
+}
+
+.ticket-table td {
+    padding: 0.95rem 1rem;
+    color: var(--txt);
+    vertical-align: middle;
+}
+
+.ticket-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--txt-dim);
+    background: var(--bg-card2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    padding: 0.2rem 0.55rem;
+}
+
+.ticket-seat {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--or);
+    background: var(--or-glow);
+    border: 1px solid var(--line-or);
+    border-radius: var(--r-sm);
+    padding: 0.2rem 0.65rem;
+}
+
+.ticket-time {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--txt-dim);
+}
+
+/* ─── Resend button ──────────────────────────────────────────── */
+.ticket-resend-wrap {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+}
+
+.ticket-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+}
+
+/* ─── Sidebar info items ─────────────────────────────────────── */
+.ticket-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.ticket-info-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+}
+
+.ticket-info-value {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--txt);
+    word-break: break-all;
+}
+
+/* ─── Total block ────────────────────────────────────────────── */
+.ticket-total-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--or-glow);
+    border: 1px solid var(--line-or);
+    border-radius: var(--r-md);
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.ticket-total-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--or);
+    opacity: 0.75;
+}
+
+.ticket-total-amount {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--or);
+}
+
+/* Success Container */
+
+.order-success {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+    color: #4ade80;
+    border-radius: var(--r-md);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.88rem;
+    margin-bottom: 2rem;
+}
+
+.order-success span {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    font-size: 0.65rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 860px) {
+    .ticket-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ticket-sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+    }
+
+    .ticket-panel {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .ticket-title { font-size: 1.5rem; }
+    .ticket-panel { padding: 1.25rem; }
+    .ticket-sidebar { grid-template-columns: 1fr; }
+    .ticket-table th,
+    .ticket-table td { padding: 0.75rem; }
+}
