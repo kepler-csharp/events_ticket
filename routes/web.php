@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\OrderController;
+
 use App\Http\Middleware\ValidateTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +28,9 @@ Route::middleware(ValidateTokenMiddleware::class)->group(function () {
     // Seats
     Route::get('/event/showtime/{id}', [EventController::class, 'displaySeats'])->name('event.display-seats');
     Route::post('/event/showtime/{id}', [EventController::class, 'buySeats'])->name('event.buy-seats');
+
+    // Orders
+    Route::get('/order/{id}', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/order/{id}/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
+    Route::get('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
 });

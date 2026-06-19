@@ -16,8 +16,6 @@ class CatalogController extends Controller
 
     public function index()
     {
-        $search = request()->query('search');
-
         // Getting events data
         $response = Http::get($this->url);
 
@@ -25,10 +23,11 @@ class CatalogController extends Controller
         if(!$response->successful()) {
             return back()->withErrors([
                 "failedReq" => "The request failed. Server may be down."
-            ])->withInput();
+            ]);
         }
 
         $events = collect($response->json()['data']['items']);
+
         // Filtering data
 
         // By search bar
@@ -47,7 +46,7 @@ class CatalogController extends Controller
         if($active) {
             $events = $events->filter(
                 fn($event) =>
-                    $event['active'] == true
+                    $event['isActive'] == true
             )->values();
         }
 
@@ -105,18 +104,6 @@ class CatalogController extends Controller
                 'events' => $filteredEvents
             ]
         );
-    }
-
-    // PENDING
-    public function filter(Request $request) {
-        // Getting filters
-        $filters = $request->validate([ 'filters' => 'required|array|min:1' ]);
-
-        // Making request
-        $response = Http::get($this->url);
-
-        // Filtering response
-        dd($filters);
     }
 
     // PENDING

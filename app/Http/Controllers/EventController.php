@@ -54,12 +54,14 @@ class EventController extends Controller
 
     public function buySeats(Request $request, $id) {
         $data = request()->validate(["seats" => "required", "email" => "required|email", "fullname" => "sometimes", "phone" => "sometimes"]);
+        $seats = json_decode($data['seats']);
 
         // Check the user exists
-        $userResponse = Http::post($this->url."receptionist/customers/lookup".$id, $data['email']);
+        $userResponse = Http::withToken(session("token"))->get($this->url."receptionist/customers/lookup?email=".$data['email']);
 
-        // Creating user if wasn't succesfull
+        // Creating user if user doesn't exist
         if($userResponse->getStatusCode() == 404 && (!isset($data['fullname']) && !isset($data['phone']))) {
+            // If queries weren't sent, request them
             return back()->withErrors([
                 "email" => "That user doesn't exists. Please, create it below"
             ])->withInput();
@@ -70,18 +72,45 @@ class EventController extends Controller
             $newUserResponse = Http::withToken(session('token'))
                 ->withOptions(['debug' => true])
                 ->post($this->url."receptionist/customers", [
-                "fullName" => $data["fullname"],
-                "phone" => $data["phone"],
-                "email" => $data["email"],
+                    "fullName" => $dataUser["fullname"],
+                    "phone" => $dataUser["phone"],
+                    "email" => $data["email"],
             ]);
+
+            // Checking response
+            if(!$newUserResponse->successful()) {
+                return back()->withErrors([
+                    "failedReq" => "The request failed. Server may be down."
+                ]);
+            }
         }
 
         // Reserve seats
-        /*$orderResponse = Http::post($this->url."receptionist/checkout", [
-            $customerUserId;
-        ]);*/
+        $seatResponse = Http::withToken(session('token'))
+            ->post($this->url."seats/reserve", [
+                "showtimeId" => $id,
+                "seatIds" => $seats
+        ]);
 
-        // Redirect to order view
+        // Checking seat reserve response
+        if(!$seatResponse->successful()) {
+            return back()->withErrors([
+                "failedReq" => "The request failed. Server may be down."
+            ]);
+        }
 
+        // Create order
+        $orderResponse = Http::withToken(session('token'))
+            ->post($this->url."orders", [
+                "seatIds" => $seats
+            ]);
+
+        // Checking order response
+        if(!$orderResponse->successful()) {
+            return back()->withErrors(["failedReq" => "The request failed. Server may be down."]);
+        }
+
+        // Redirect to order confirmation view
+        return redirect()->route('order.index', $orderResponse->json()['data']['id']);
     }
 }

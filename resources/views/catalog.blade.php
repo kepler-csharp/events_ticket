@@ -37,13 +37,13 @@
             <span class="filters-label">Filtrar</span>
             <div class="filter-group">
                 <label for="filterActive">Activos</label>
-                <input type="checkbox" name="active" id="filterActive">
+                <input type="checkbox" name="active" {{ request('active') ? 'checked' : '' }} id="filterActive">
 
                 <label for="filterMovies">Películas</label>
-                <input type="checkbox" name="movies" id="filterMovies">
+                <input type="checkbox" name="movies" {{ request('movies') ? 'checked' : '' }} id="filterMovies">
 
                 <label for="filterConcerts">Conciertos</label>
-                <input type="checkbox" name="concerts" id="filterConcerts">
+                <input type="checkbox" name="concerts" {{ request('concerts') ? 'checked' : '' }} id="filterConcerts">
             </div>
             <button type="submit" class="btn-primary filters-apply">Aplicar</button>
         </div>
