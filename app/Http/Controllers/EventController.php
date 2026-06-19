@@ -99,6 +99,12 @@ class EventController extends Controller
                 "seatIds" => $seats
         ]);
 
+        /*dd($seatResponse, [
+            "customerUserId" => session("order")['userId'],
+            "showtimeId" => $id,
+            "seatIds" => $seats
+        ]);*/
+
         // Checking seat reserve response
         if(!$seatResponse->successful()) {
             return back()->withErrors([

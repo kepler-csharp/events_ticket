@@ -31,7 +31,9 @@ Route::middleware(ValidateTokenMiddleware::class)->group(function () {
 
     // Orders
     Route::get('/order/{id}', [OrderController::class, 'index'])->name('order.index');
-    Route::get('/order/{id}/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
+    Route::post('/order/{id}', [OrderController::class, 'confirm'])->name('order.confirm');
     Route::get('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
-    Route::get('/order/{id}/resend', [OrderController::class, 'resend'])->name('order.resend');
+
+    // Bills
+    Route::get('/bill/{id}', [OrderController::class, 'resend'])->name('bill.index');
 });

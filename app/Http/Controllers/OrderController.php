@@ -40,13 +40,16 @@ class OrderController extends Controller
     }
 
     // Confirm Order
-    public function confirm($id) {
+    public function confirm(Request $request, $id) {
+        // Getting request values
+        $payMethod = $request->validate(['payMethod' => 'required'])['payMethod'];
+
         // Making request
         $confirmOrder = Http::withToken(session('token'))
             ->post($this->url.'receptionist/checkout', [
                 "customerUserId" => session("order")['userId'],
-               "seatIds" => session("order")['seats'],
-               "paymentMethod" => "completed"
+               "seatIds" => json_decode(session("order")['seats']),
+               "paymentMethod" => $payMethod
             ]);
 
         // Checking response
@@ -59,25 +62,17 @@ class OrderController extends Controller
         // Emptying order memory
         session()->forget("order");
 
+        // Saving ticket data in memory
+        session()->put("tickets", $confirmOrder['data']);
+
         // Returning to same order
-        return back();
+        return route('bill.index');
     }
 
     // Cancel order
-    public function cancel($id) {
-        // Making request
-        $cancelOrder = Http::withToken(session("token"))
-            ->post($this->url.'orders/pay', [
-                "orderId" => $id,
-                "paymentMethod" => "cancelled"
-            ]);
-
-        // Checking response
-        if(!$cancelOrder->successful()) {
-            return back()->withErrors([
-                "failedReq" => "Server may be down"
-            ]);
-        }
+    public function cancel() {
+        // Emptying order memory
+        session()->forget("order");
 
         // Returning to events catalog
         return redirect()->route("catalog.index");

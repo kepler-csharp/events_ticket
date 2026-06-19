@@ -4,7 +4,7 @@ const showtime = window.showtime;
 
 // Creating necessary vars
 const selectedSeats = [];
-
+const selectedSeatsLabel = [];
 // Creating Konva Drawer
 const stage = new Konva.Stage({
     container: 'seat-map',
@@ -22,14 +22,17 @@ const rowsLetters = [...new Set(seats.map(seat => String(seat.row)))].sort(); //
 // Selecting seats
 function toggleSeat(seat, circle) {
     const index = selectedSeats.indexOf(seat.id);
+    const labelIndex = selectedSeatsLabel.indexOf(seat.label)
 
     if (index !== -1) {
         // If it is selected, remove of there
         selectedSeats.splice(index, 1);
+        selectedSeatsLabel.splice(labelIndex, 1);
         circle.fill('#4CAF50');
     } else {
         // If isn't selected, add it into selectedSeats
         selectedSeats.push(seat.id);
+        selectedSeatsLabel.push(seat.label);
         circle.fill('#FD7B41');
     }
 
@@ -46,8 +49,7 @@ function updateDisplay() {
     if (selectedCount === 0) {
         document.getElementById('selectedSeatsDisplay').textContent = 'Ninguno';
     } else {
-        console.log("there is nothing")
-        document.getElementById('selectedSeatsDisplay').textContent = selectedSeats.join(', ');
+        document.getElementById('selectedSeatsDisplay').textContent = selectedSeatsLabel.join(', ');
     }
 
     // Updating total cost
