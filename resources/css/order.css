@@ -1,0 +1,308 @@
+/* ═══════════════════════════════════════════════════════════════
+   ORDER CONFIRMATION — scoped styles
+   Requires variables from layouts/app.blade.php
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Page wrapper ───────────────────────────────────────────── */
+.order-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+/* ─── Error banner ───────────────────────────────────────────── */
+.order-error {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    border-radius: var(--r-md);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.88rem;
+    margin-bottom: 2rem;
+}
+
+/* ─── Page heading ───────────────────────────────────────────── */
+.order-page-header {
+    margin-bottom: 2rem;
+}
+
+.order-page-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 0.5rem;
+}
+
+.order-page-title {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--txt);
+    line-height: 1.1;
+}
+
+.order-id {
+    color: var(--or);
+}
+
+/* ─── Two-column layout ──────────────────────────────────────── */
+.order-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+/* ─── Panel (shared card style) ─────────────────────────────── */
+.order-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.order-panel-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order-panel-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--or);
+    flex-shrink: 0;
+    display: none; /* hide when emoji is present */
+}
+
+/* ─── Tickets table ──────────────────────────────────────────── */
+.order-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--r-md);
+    border: 1px solid var(--line);
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.order-table thead tr {
+    background: var(--bg-card2);
+    border-bottom: 1px solid var(--line);
+}
+
+.order-table th {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    font-weight: 600;
+    padding: 0.85rem 1rem;
+    text-align: left;
+}
+
+.order-table tbody tr {
+    border-bottom: 1px solid var(--line);
+    transition: background var(--t);
+}
+
+.order-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.order-table tbody tr:hover {
+    background: var(--bg-card2);
+}
+
+.order-table td {
+    padding: 0.95rem 1rem;
+    color: var(--txt);
+    vertical-align: middle;
+}
+
+/* Ticket ID badge */
+.order-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--txt-dim);
+    background: var(--bg-card2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    padding: 0.2rem 0.55rem;
+}
+
+/* Seat label pill */
+.seat-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--or);
+    background: var(--or-glow);
+    border: 1px solid var(--line-or);
+    border-radius: var(--r-sm);
+    padding: 0.2rem 0.65rem;
+    letter-spacing: 0.04em;
+}
+
+/* Showtime */
+.order-time {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--txt-dim);
+}
+
+/* ─── Sidebar: info items ────────────────────────────────────── */
+.order-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.order-info-item:last-of-type {
+    border-bottom: none;
+}
+
+.order-info-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+}
+
+.order-info-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--txt);
+    word-break: break-all;
+}
+
+/* ─── Status badges ──────────────────────────────────────────── */
+.order-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    padding: 0.2rem 0.75rem;
+}
+
+.order-status--pending {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.order-status--completed {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+.order-status--cancelled {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+}
+
+/* ─── Total block ────────────────────────────────────────────── */
+.order-total-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--or-glow);
+    border: 1px solid var(--line-or);
+    border-radius: var(--r-md);
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.order-total-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--or);
+    opacity: 0.75;
+}
+
+.order-total-amount {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--or);
+}
+
+/* ─── Action buttons ─────────────────────────────────────────── */
+.order-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.order-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+}
+
+/* Closed notice */
+.order-closed-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    background: var(--bg-card2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 860px) {
+    .order-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .order-page-title { font-size: 1.5rem; }
+    .order-panel { padding: 1.25rem; }
+    .order-table th,
+    .order-table td { padding: 0.75rem 0.75rem; }
+}
