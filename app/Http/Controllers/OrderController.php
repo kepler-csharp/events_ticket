@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Http;
 class OrderController extends Controller
 {
     private $url;
+    private $printUrl;
 
     public function __construct() {
         $this->url = config('api.url');
+        $this->printUrl = config('api.print_url');
     }
 
     // Show Order Info
@@ -27,7 +29,7 @@ class OrderController extends Controller
         // Checking response
         if(!$showtimeResponse->successful()) {
             return back()->withErrors([
-                "failedReq" => "Server may be down"
+                "failedReq" => $showtimeResponse->json('message')
             ]);
         }
 
@@ -55,7 +57,7 @@ class OrderController extends Controller
         // Checking response
         if(!$confirmOrder->successful()) {
             return back()->withErrors([
-                "failedReq" => "Server may be down"
+                "failedReq" => $confirmOrder->json('message')
             ]);
         }
 
@@ -64,6 +66,10 @@ class OrderController extends Controller
 
         // Saving ticket data in memory
         session()->put("tickets", $confirmOrder['data']);
+
+        // Posting request
+        //dd($confirmOrder);
+        //Http::post($this->printUrl, $confirmOrder['data']);
 
         // Returning to same order
         return redirect('bill');
