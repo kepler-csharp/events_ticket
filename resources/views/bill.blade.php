@@ -55,11 +55,11 @@
                         </table>
                     </div>
 
-                    <div class="ticket-resend-wrap">
+                    {{--<div class="ticket-resend-wrap">
                         <a href="{{ route('bill.resend') }}" class="btn-ghost ticket-btn">
                             ✉️ Reenviar Email
                         </a>
-                    </div>
+                    </div>--}}
                 </div>
             </div>
 
