@@ -33,6 +33,7 @@
         </div>
 
         <nav>
+            <a href="{{ route('advisers.index') }}">Asesores</a>
             <a href="{{ route('catalog.index') }}">Eventos</a>
             <a href="{{ route('auth.logout') }}" class="btn-nav-logout">Cerrar Sesión</a>
         </nav>

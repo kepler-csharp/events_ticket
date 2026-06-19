@@ -45,34 +45,6 @@ class AuthController extends Controller
     }
 
     // Logic Functions
-    public function register(Request $request)
-    {
-        $data = $request->validate([
-            "fullName" => "required|min:4|max:30",
-            "email" => "required|email",
-            "password" => [
-                "required",
-                "max:100",
-                //Password::min(8)->mixedCase()->numbers()->symbols()
-            ]
-        ]);
-
-        // Make request to API intermediary
-        $response = Http::post($this->url."auth/register-receptionist", $data);
-
-        // Check errors
-        if($response->status() == 401) {
-            return back()->withErrors([
-                "failedReq" => "Unauthorized to do this action"
-            ])->withInput();
-        }
-
-        // Set session of user
-        $this->saveSession($response->json()["accessToken"]);
-
-        // Return to catalog
-        return redirect('/');
-    }
     public function login(Request $request) {
         $data = $request->validate(["email" => "required|email", "password" => "required"]);
 

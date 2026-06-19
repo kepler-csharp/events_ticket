@@ -41,7 +41,6 @@ class BillController extends Controller
 
         // Checking response
         if(!$resendOrder->successful()) {
-            dd($resendOrder, $orderId, $this->url.'receptionist/orders/'.$orderId.'/resend-email');
             return back()->withErrors([
                 "failedReq" => "Server may be down"
             ]);

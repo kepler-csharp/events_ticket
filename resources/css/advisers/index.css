@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════════════════════
+   ADVISERS PANEL — scoped styles
+   Requires variables from layouts/app.blade.php
+   ═══════════════════════════════════════════════════════════════ */
+
+.advisers-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.advisers-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.advisers-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 0.5rem;
+}
+
+.advisers-title {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--txt);
+    line-height: 1.1;
+}
+
+.advisers-title span { color: var(--or); }
+
+.advisers-btn-new {
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ─── Panel ──────────────────────────────────────────────────── */
+.advisers-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+}
+
+.advisers-panel-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.advisers-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--r-md);
+    border: 1px solid var(--line);
+}
+
+.advisers-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.advisers-table thead tr {
+    background: var(--bg-card2);
+    border-bottom: 1px solid var(--line);
+}
+
+.advisers-table th {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    font-weight: 600;
+    padding: 0.85rem 1rem;
+    text-align: left;
+}
+
+.advisers-table tbody tr {
+    border-bottom: 1px solid var(--line);
+    transition: background var(--t);
+}
+
+.advisers-table tbody tr:last-child { border-bottom: none; }
+
+.advisers-table tbody tr:hover { background: var(--bg-card2); }
+
+.advisers-table td {
+    padding: 0.95rem 1rem;
+    color: var(--txt);
+    vertical-align: middle;
+}
+
+.advisers-email {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--txt-dim);
+}
+
+/* ─── Empty state ────────────────────────────────────────────── */
+.advisers-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 2.5rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 560px) {
+    .advisers-page-header { flex-direction: column; align-items: flex-start; }
+    .advisers-btn-new { width: 100%; justify-content: center; }
+    .advisers-title { font-size: 1.5rem; }
+    .advisers-panel { padding: 1.25rem; }
+    .advisers-table th,
+    .advisers-table td { padding: 0.75rem; }
+}

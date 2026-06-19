@@ -1,0 +1,128 @@
+/* ═══════════════════════════════════════════════════════════════
+   CREATE ADVISER — scoped styles
+   Requires variables from layouts/app.blade.php
+   ═══════════════════════════════════════════════════════════════ */
+
+.create-adviser-page {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.create-adviser-header {
+    margin-bottom: 2rem;
+}
+
+.create-adviser-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 0.5rem;
+}
+
+.create-adviser-title {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--txt);
+    line-height: 1.1;
+}
+
+.create-adviser-title span { color: var(--or); }
+
+/* ─── Panel ──────────────────────────────────────────────────── */
+.create-adviser-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+}
+
+.create-adviser-panel-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ─── Form fields ────────────────────────────────────────────── */
+.create-adviser-form-group {
+    margin-bottom: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.create-adviser-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--txt-dim);
+}
+
+.create-adviser-input {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    color: var(--txt);
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    padding: 0.8rem 1rem;
+    transition: border-color var(--t), box-shadow var(--t);
+    outline: none;
+    width: 100%;
+}
+
+.create-adviser-input::placeholder { color: var(--txt-faint); }
+
+.create-adviser-input:focus {
+    border-color: var(--or);
+    box-shadow: 0 0 0 3px rgba(253, 123, 65, 0.08), 0 0 20px var(--or-glow);
+    background: var(--bg-card2);
+}
+
+.create-adviser-input.is-invalid {
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.06);
+}
+
+.create-adviser-field-error {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: #f87171;
+}
+
+/* ─── Actions ────────────────────────────────────────────────── */
+.create-adviser-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+}
+
+.create-adviser-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 560px) {
+    .create-adviser-title { font-size: 1.5rem; }
+    .create-adviser-panel { padding: 1.25rem; }
+}

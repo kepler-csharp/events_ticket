@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -41,7 +42,26 @@ class AdviserController extends Controller
     }
 
     public function store(Request $request) {
+        $data = $request->validate([
+            "fullName" => "required|min:4|max:30",
+            "email" => "required|email",
+            "password" => [
+                "required",
+                "max:100",
+                Password::min(8)->mixedCase()->numbers()->symbols()
+            ]
+        ]);
 
-        return redirect()->route('adviser.index')->with('');
+        // Make request to API intermediary
+        $response = Http::post($this->url."auth/register-receptionist", $data);
+
+        // Check errors
+        if($response->status() == 401) {
+            return back()->withErrors([
+                "failedReq" => "Unauthorized to do this action"
+            ])->withInput();
+        }
+
+        return redirect()->route('adviser.index')->with('success', 'Adviser created successfully');
     }
 }

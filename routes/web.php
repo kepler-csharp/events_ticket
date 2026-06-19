@@ -5,6 +5,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\AdviserController;
 
 use App\Http\Middleware\ValidateTokenMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -12,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 // Auth
 Route::get('/login', [AuthController::class, 'renderLogin'])->name('auth.login.form');
 Route::post("/login", [AuthController::class, 'login'])->name('auth.login');
-
-//Route::get('/register', [AuthController::class, 'renderRegister'])->name('auth.register');
-//Route::post("/register", [AuthController::class, 'register'])->name('auth.register');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
@@ -40,7 +38,7 @@ Route::middleware(ValidateTokenMiddleware::class)->group(function () {
     Route::get('/bill/resend', [BillController::class, 'resend'])->name('bill.resend');
 
     // Advisers
-    Route::get('/advisers', [])->name('advisers.index');
-    Route::get('/advisers/new', [])->name('advisers.new');
-    Route::post('/advisers/new', [])->name('advisers.store');
+    Route::get('/advisers', [AdviserController::class, "index"])->name('advisers.index');
+    Route::get('/advisers/new', [AdviserController::class, "create"])->name('advisers.new');
+    Route::post('/advisers/new', [AdviserController::class, "store"])->name('advisers.store');
 });
