@@ -17,16 +17,12 @@ class ValidateTokenMiddleware
     {
         // Checking there is a token saved in session memory
         if(!session('token')) {
-            return redirect('login')->withErrors([
-                "failedReq" => "You must be logged in to access"
-            ]);
+            return redirect('login');
         }
 
         // Checking the user token has permissions
         if(session('user')['role'] != 'Admin' && session('user')['role'] != 'Receptionist') {
-            return redirect('login')->withErrors([
-                "failedReq" => "Your account doesn't have permission to access this page"
-            ]);
+            return redirect('login');
         }
 
         return $next($request);

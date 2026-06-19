@@ -14,7 +14,7 @@
     <div class="login-container">
         <div class="login-header">
             <div class="logo">🎟️</div>
-            <h1>Calcite</h1>
+            <h1>Kepler Tickets</h1>
             <p>Sistema de Recepción Virtual</p>
         </div>
 

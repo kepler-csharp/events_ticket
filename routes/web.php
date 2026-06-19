@@ -33,4 +33,5 @@ Route::middleware(ValidateTokenMiddleware::class)->group(function () {
     Route::get('/order/{id}', [OrderController::class, 'index'])->name('order.index');
     Route::get('/order/{id}/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
     Route::get('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+    Route::get('/order/{id}/resend', [OrderController::class, 'resend'])->name('order.resend');
 });

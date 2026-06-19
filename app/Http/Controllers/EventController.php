@@ -69,7 +69,7 @@ class EventController extends Controller
             $dataUser = request()->validate(["fullname" => "required|regex:/^[\pL\s]+$/u|min:3|max:30", "phone" => "required|numeric"]);
 
             // Creating user
-            $newUserResponse = Http::withToken(session('token'))
+            $userResponse = Http::withToken(session('token'))
                 ->withOptions(['debug' => true])
                 ->post($this->url."receptionist/customers", [
                     "fullName" => $dataUser["fullname"],
@@ -78,16 +78,23 @@ class EventController extends Controller
             ]);
 
             // Checking response
-            if(!$newUserResponse->successful()) {
+            if(!$userResponse->successful()) {
                 return back()->withErrors([
                     "failedReq" => "The request failed. Server may be down."
                 ]);
             }
         }
 
+        // Saving User ID and seats in memory
+        session()->put("order", [
+            "userId" => $userResponse->json()['data']["userId"],
+            "seats" => $data['seats']
+        ]);
+
         // Reserve seats
         $seatResponse = Http::withToken(session('token'))
-            ->post($this->url."seats/reserve", [
+            ->post($this->url."receptionist/reserve", [
+                "customerUserId" => session("order")['userId'],
                 "showtimeId" => $id,
                 "seatIds" => $seats
         ]);
@@ -99,18 +106,7 @@ class EventController extends Controller
             ]);
         }
 
-        // Create order
-        $orderResponse = Http::withToken(session('token'))
-            ->post($this->url."orders", [
-                "seatIds" => $seats
-            ]);
-
-        // Checking order response
-        if(!$orderResponse->successful()) {
-            return back()->withErrors(["failedReq" => "The request failed. Server may be down."]);
-        }
-
         // Redirect to order confirmation view
-        return redirect()->route('order.index', $orderResponse->json()['data']['id']);
+        return redirect()->route('order.index', $id);
     }
 }

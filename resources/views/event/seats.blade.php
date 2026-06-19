@@ -10,6 +10,14 @@
         Volver
     </a>
 
+    {{-- Errors --}}
+    @error('failedReq')
+    <div class="alert-error">
+        <span>⚠️</span>
+        {{ $message }}
+    </div>
+    @enderror
+
     <div class="seats-layout">
         <!-- Seats Selection -->
         <div class="seats-container">

@@ -25,7 +25,7 @@
     <div class="header-inner">
         <div class="header-brand">
             <div class="brand-icon">🎟</div>
-            <div class="brand-text">Cal<span>cite</span></div>
+            <div class="brand-text">Kepler <span>Tickets</span></div>
             <div class="header-status">
                 <div class="status-dot"></div>
                 SISTEMA ACTIVO
@@ -47,7 +47,7 @@
 
 <footer>
     <div class="footer-inner">
-        <span>CALCITE</span>
+        <span>KEPLER TICKETS</span>
         SISTEMA DE RECEPCIÓN VIRTUAL
         ·
         ASESORES RECEPCIONISTAS

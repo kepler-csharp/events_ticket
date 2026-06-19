@@ -15,18 +15,37 @@ class OrderController extends Controller
 
     // Show Order Info
     public function index($id) {
-        $order = (Http::withToken(session('token'))
-            ->get($this->url.'orders/'.$id))->json()['data'];
+        // Check there's order in memory
+        if(!session('order')) {
+            return redirect('/');
+        }
 
-        return view("order", compact("order"));
+        // Getting showtime
+        $showtimeResponse = Http::withToken(session('token'))
+            ->get($this->url."showtimes/".$id);
+
+        // Checking response
+        if(!$showtimeResponse->successful()) {
+            return back()->withErrors([
+                "failedReq" => "Server may be down"
+            ]);
+        }
+
+        $showtime = $showtimeResponse['data'];
+
+        // Calculating total price
+        $totalPrice = (intval($showtime['basePrice']))*(count(json_decode(session("order")['seats'])));
+
+        return view("order", compact("showtime", "totalPrice"));
     }
 
     // Confirm Order
     public function confirm($id) {
         // Making request
         $confirmOrder = Http::withToken(session('token'))
-            ->post($this->url.'orders/pay', [
-               "orderId" => $id,
+            ->post($this->url.'receptionist/checkout', [
+                "customerUserId" => session("order")['userId'],
+               "seatIds" => session("order")['seats'],
                "paymentMethod" => "completed"
             ]);
 
@@ -37,7 +56,11 @@ class OrderController extends Controller
             ]);
         }
 
-        // Returning to ticket view
+        // Emptying order memory
+        session()->forget("order");
+
+        // Returning to same order
+        return back();
     }
 
     // Cancel order
@@ -49,6 +72,7 @@ class OrderController extends Controller
                 "paymentMethod" => "cancelled"
             ]);
 
+        // Checking response
         if(!$cancelOrder->successful()) {
             return back()->withErrors([
                 "failedReq" => "Server may be down"
@@ -57,5 +81,37 @@ class OrderController extends Controller
 
         // Returning to events catalog
         return redirect()->route("catalog.index");
+    }
+
+    // Resend Email
+    public function resend($id) {
+        // Checking that order is completed
+        $order = (Http::withToken(session('token'))->get($this->url.'orders/'.$id));
+
+        if(!$order->successful()) {
+            return back()->withErrors([
+                "failedReq" => "Server may be down"
+            ]);
+        }
+
+        if($order['status'] != 1) {
+            return back()->withErrors([
+                "failedReq" => "Order must be completed for resend emails"
+            ]);
+        }
+
+        // Make request for resend emails
+        $resendOrder = Http::withToken(session('token'))
+            ->post($this->url.'orders/pay', ["id" => $id]);
+
+        // Checking response
+        if(!$resendOrder->successful()) {
+
+            return back()->withErrors([
+                "failedReq" => "Server may be down"
+            ]);
+        }
+
+        return back()->with('success', 'Emails sent successfully');
     }
 }
