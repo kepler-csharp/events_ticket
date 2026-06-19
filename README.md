@@ -1,13 +1,13 @@
-# 🎟️ Calcite — Virtual Reception System
+# 🎟️ Kepler — Virtual Reception System
 
-Calcite is a web platform built for receptionists at ticket-selling venues, handling seat selection, order management, payment processing, and ticket generation for concerts and movie screenings.
+Kepler is a web platform built for receptionists at ticket-selling venues, handling seat selection, order management, payment processing, and ticket generation for concerts and movie screenings.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-calcite/
+kepler/
 │
 ├── app/
 │   ├── Http/
@@ -88,13 +88,13 @@ cp .env.example .env
 Or configure manually:
 
 ```env
-APP_NAME=Calcite
+APP_NAME=Kepler
 APP_URL=http://localhost:8000
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=calcite
+DB_DATABASE=kepler
 DB_USERNAME=root
 DB_PASSWORD=secret
 
