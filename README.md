@@ -1,58 +1,326 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎟️ Calcite — Virtual Reception System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Calcite is a web platform built for receptionists at ticket-selling venues, handling seat selection, order management, payment processing, and ticket generation for concerts and movie screenings.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📁 Project Structure
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+calcite/
+│
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/         ← Route controllers
+│   │   └── Middleware/          ← Auth & role middleware
+│   └── Services/                ← Business logic layer
+│
+├── resources/
+│   ├── views/
+│   │   ├── layouts/             ← Base app layout (design tokens)
+│   │   ├── components/          ← Reusable Blade components
+│   │   ├── event/
+│   │   │   ├── index.blade.php  ← Event detail page
+│   │   │   └── seats.blade.php  ← Interactive seat map
+│   │   └── catalog.blade.php    ← Events listing
+│   ├── css/
+│   │   └── app.css              ← Global styles & CSS variables
+│   └── js/
+│       └── app.js               ← Vite entrypoint + seat map renderer
+│
+├── routes/
+│   ├── web.php                  ← Web routes
+│   └── api.php                  ← API routes
+│
+├── database/
+│   ├── migrations/
+│   └── seeders/
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml           ← CI/CD pipeline
+│
+├── docker/                      ← Dockerfile & Nginx config
+├── docker-compose.yml
+└── docker-compose.prod.yml
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+# ✨ Features
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🔐 Authentication
+- Secure login for receptionists and administrators
+- Role-based access control (Admin / Receptionist)
 
-## Code of Conduct
+## 🗺️ Seat Map
+- Interactive seat map rendered dynamically via JavaScript
+- Real-time seat availability (available, occupied, selected)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🛒 Order Management
+- Create, confirm, and cancel orders
+- Order status tracking (Pending / Completed / Cancelled)
+- Resend confirmation email
 
-## Security Vulnerabilities
+## 💳 Payment Processing
+- Cash
+- Bank Transfer
+- Debit Card
+- Credit Card
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🎫 Ticket Generation
+- Automatic ticket creation on order confirmation
+- Ticket view with full order and customer details
 
-## License
+## 👥 Adviser Panel
+- Admin-only interface to create and manage receptionist accounts
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+# 🚀 Start Project
+
+## Add `.env`
+
+```bash
+cp .env.example .env
+```
+
+Or configure manually:
+
+```env
+APP_NAME=Calcite
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=calcite
+DB_USERNAME=root
+DB_PASSWORD=secret
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+
+L5_SWAGGER_GENERATE_ALWAYS=true
+```
+
+---
+
+# ▶️ Execute
+
+## Install dependencies
+
+```bash
+composer install
+npm install
+```
+
+## Generate app key
+
+```bash
+php artisan key:generate
+```
+
+## Run migrations
+
+```bash
+php artisan migrate --seed
+```
+
+## Start development servers
+
+```bash
+php artisan serve
+npm run dev
+```
+
+App available at:
+
+```
+http://localhost:8000
+```
+
+---
+
+# 👤 Default Roles
+
+| Role | Email                    | Password |
+|---|--------------------------|---|
+| Admin | admin@tickets.com        | Admin1234! |
+| Receptionist | receptionist@tickets.com | Recept1234! |
+
+---
+
+# 📋 Requirements
+
+Install the following before running the project:
+
+- PHP >= 8.2
+- Composer
+- Node.js >= 18
+- MySQL Server
+- Docker Desktop *(for containerized setup)*
+
+---
+
+# 📦 Composer Packages
+
+```bash
+composer require darkaonline/l5-swagger
+composer require laravel/sanctum
+```
+
+---
+
+# 📖 API Documentation
+
+Swagger docs are auto-generated via `darkaonline/l5-swagger`.
+
+Open Swagger UI:
+
+```
+http://localhost:8000/api/documentation
+```
+
+Regenerate docs manually:
+
+```bash
+php artisan l5-swagger:generate
+```
+
+---
+
+## 🔗 API Endpoints
+
+### Auth (`/api/auth`)
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| POST | `/api/auth/login` | Public | Login → session token |
+| POST | `/api/auth/logout` | Authenticated | Invalidate session |
+
+### Events (`/api/events`)
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| GET | `/api/events` | Public | List all active events |
+| GET | `/api/events/{id}` | Public | Event details |
+
+### Showtimes (`/api/showtimes`)
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| GET | `/api/showtimes/{id}` | Public | Showtime details + base price |
+| GET | `/api/showtimes/{id}/seats` | Public | Seat map for a showtime |
+
+### Orders (`/api/orders`)
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| POST | `/api/orders` | Receptionist | Create order from selected seats |
+| PATCH | `/api/orders/{id}/confirm` | Receptionist | Confirm and process payment |
+| PATCH | `/api/orders/{id}/cancel` | Receptionist | Cancel a pending order |
+| POST | `/api/orders/{id}/resend` | Receptionist | Resend confirmation email |
+| GET | `/api/orders/{id}` | Receptionist | Order + ticket details |
+
+### Advisers (`/api/advisers`)
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| GET | `/api/advisers` | Admin | List all advisers |
+| POST | `/api/advisers` | Admin | Create new adviser account |
+
+---
+
+## 🔄 Complete Purchase Flow
+
+```
+1. POST /api/auth/login                  → Authenticate receptionist
+2. GET  /api/showtimes/{id}/seats        → View available seat map
+3. POST /api/orders                      → Create order from selected seats
+4. POST /api/orders/{id}/confirm         → Choose payment method → confirm
+5. GET  /api/orders/{id}                 → View generated tickets
+```
+
+---
+
+# 🐳 Docker
+
+## Build and start all services
+
+```bash
+docker compose up --build
+```
+
+## Run in background
+
+```bash
+docker compose up -d
+```
+
+## Run artisan commands inside container
+
+```bash
+docker compose exec app php artisan migrate
+docker compose exec app php artisan l5-swagger:generate
+```
+
+## Stop containers
+
+```bash
+docker compose down
+```
+
+---
+
+# 🌐 Services
+
+| Service | URL |
+|---|---|
+| App | http://localhost:8000 |
+| Swagger | http://localhost:8000/api/documentation |
+| MySQL | localhost:3306 |
+
+---
+
+# ⚙️ CI/CD Pipeline
+
+Calcite uses **GitHub Actions** for automated deployment on every push to `main`.
+
+## Pipeline Steps
+
+```
+Push to main
+     │
+     ▼
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│    Build    │────▶│    Test     │────▶│   Deploy    │
+│  & Lint     │     │  (PHPUnit)  │     │  (Docker)   │
+└─────────────┘     └─────────────┘     └─────────────┘
+```
+
+1. Checkout repository
+2. Install PHP & Composer dependencies
+3. Install Node.js & NPM dependencies
+4. Run PHPUnit test suite
+5. Build Docker image and push to registry
+6. Deploy to production server via SSH
+
+## 🔑 Required GitHub Secrets
+
+| Secret | Description |
+|---|---|
+| `DOCKER_USERNAME` | Docker Hub username |
+| `DOCKER_PASSWORD` | Docker Hub access token |
+| `SSH_HOST` | Production server IP |
+| `SSH_USER` | SSH login user |
+| `SSH_PRIVATE_KEY` | SSH private key for deployment |
+
+---
+
+# 📄 License
+
+This project is intended for internal and educational use. All rights reserved.
