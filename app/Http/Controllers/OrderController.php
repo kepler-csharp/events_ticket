@@ -70,7 +70,10 @@ class OrderController extends Controller
 
         // Posting request
         try {
-            Http::timeout(2)->post($this->printUrl, $confirmOrder['data']);
+            Http::timeout(2)->post($this->printUrl, [
+                "customerEmail" => $confirmOrder['data']['customerEmail'],
+                "tickets" => $confirmOrder['data']['tickets']
+            ]);
         } catch (\Throwable $e) {
             Log::warning("Printing Service isn't available");
         }
