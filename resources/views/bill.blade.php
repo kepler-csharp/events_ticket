@@ -11,6 +11,13 @@
     </div>
     @enderror
 
+    {{-- Success --}}
+    @if(session('success'))
+        <div>
+            {{ session('success') }}
+        </div>
+    @endif
+
     <!-- Order Information -->
     <h1>Order #{{ $order['orderId'] }}</h1>
     <p>Amount Paid: {{ $order['amountPaid'] }}$</p>

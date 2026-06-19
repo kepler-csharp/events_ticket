@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BillController;
 
 use App\Http\Middleware\ValidateTokenMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -35,5 +36,6 @@ Route::middleware(ValidateTokenMiddleware::class)->group(function () {
     Route::get('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
 
     // Bills
-    Route::get('/bill/{id}', [OrderController::class, 'resend'])->name('bill.index');
+    Route::get('/bill', [BillController::class, 'index'])->name('bill.index');
+    Route::get('/bill/resend', [BillController::class, 'resend'])->name('bill.resend');
 });

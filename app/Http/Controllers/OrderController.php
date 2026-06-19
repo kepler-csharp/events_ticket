@@ -66,7 +66,7 @@ class OrderController extends Controller
         session()->put("tickets", $confirmOrder['data']);
 
         // Returning to same order
-        return route('bill.index');
+        return redirect('bill');
     }
 
     // Cancel order
@@ -76,37 +76,5 @@ class OrderController extends Controller
 
         // Returning to events catalog
         return redirect()->route("catalog.index");
-    }
-
-    // Resend Email
-    public function resend($id) {
-        // Checking that order is completed
-        $order = (Http::withToken(session('token'))->get($this->url.'orders/'.$id));
-
-        if(!$order->successful()) {
-            return back()->withErrors([
-                "failedReq" => "Server may be down"
-            ]);
-        }
-
-        if($order['status'] != 1) {
-            return back()->withErrors([
-                "failedReq" => "Order must be completed for resend emails"
-            ]);
-        }
-
-        // Make request for resend emails
-        $resendOrder = Http::withToken(session('token'))
-            ->post($this->url.'orders/pay', ["id" => $id]);
-
-        // Checking response
-        if(!$resendOrder->successful()) {
-
-            return back()->withErrors([
-                "failedReq" => "Server may be down"
-            ]);
-        }
-
-        return back()->with('success', 'Emails sent successfully');
     }
 }
