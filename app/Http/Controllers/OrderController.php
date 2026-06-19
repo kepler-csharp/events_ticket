@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -68,8 +69,11 @@ class OrderController extends Controller
         session()->put("tickets", $confirmOrder['data']);
 
         // Posting request
-        //dd($confirmOrder);
-        //Http::post($this->printUrl, $confirmOrder['data']);
+        try {
+            Http::timeout(2)->post($this->printUrl, $confirmOrder['data']);
+        } catch (\Throwable $e) {
+            Log::warning("Printing Service isn't available");
+        }
 
         // Returning to same order
         return redirect('bill');
